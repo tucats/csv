@@ -16,4 +16,12 @@ var Grammar = []cli.Option{
 		Action:             ListAction,
 		ParametersExpected: 1,
 	},
+	cli.Option{
+		LongName:           "headings",
+		Description:        "Show column headings of CSV file",
+		OptionType:         cli.Subcommand,
+		Value:              HeadingsGrammar,
+		Action:             HeadingsAction,
+		ParametersExpected: 1,
+	},
 }
