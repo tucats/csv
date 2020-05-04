@@ -25,6 +25,11 @@ var ListGrammar = []cli.Option{
 		OptionType:  cli.BooleanType,
 	},
 	cli.Option{
+		LongName:    "headings",
+		Description: "Specify the headings for the CSV file if no header row",
+		OptionType:  cli.StringListType,
+	},
+	cli.Option{
 		LongName:    "row-numbers",
 		Description: "If specified, print a column with the row number",
 		OptionType:  cli.BooleanType,
@@ -93,6 +98,8 @@ func ListAction(c *cli.Context) error {
 			h.WriteString(strconv.Itoa(i + 1))
 		}
 		headingString = h.String()
+	} else if c.WasFound("headings") {
+		headingString, _ = c.GetString("headings")
 	} else {
 		// There are headings, so just use the first line as the heading string.
 		headingString = textLines[0]
