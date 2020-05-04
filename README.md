@@ -31,6 +31,20 @@ default, all columns and all rows are printed using the default formatter (text 
 The user can specify additional options to control how much output is generated, and if
 the data is sorted before being displayed.
 
+    Usage:
+       csv list [options]  [filename]   List contents of a CSV file
+
+    Options:
+       --columns, -c <list>             Specify the columns to print using a comma-separated list of names   
+       --help, -h                       Show this help text                                                  
+       --limit <integer>                Specify the number of items to list                                  
+       --no-headings                    If specified, CSV file does not contain a heading row                
+       --order-by <string>              Specify the column to use to sort the output                         
+       --row-numbers                    If specified, print a column with the row number                     
+       --start <integer>                Specify the row number to start the list  
+
+Below are more details about these options.
+
 ### --columns
 You can use the `--columns` option to specify the name(s) of one or more columns that are
 to be printed. The names are derived from the first row of the data, unless `--no-headings`
