@@ -43,8 +43,7 @@ var ListGrammar = []cli.Option{
 		LongName:    "columns",
 		ShortName:   "c",
 		OptionType:  cli.StringListType,
-		Description: "Specify the columns you wish listed",
-		Private:     true,
+		Description: "Specify the columns to print using a comma-separated list of names",
 	},
 	cli.Option{
 		LongName:    "order-by",
@@ -127,6 +126,17 @@ func ListAction(c *cli.Context) error {
 		t.RowLimit(limit)
 	}
 
+	// If the user asked for specific columns, filter that now.
+
+	if names, present := c.GetStringList("columns"); present {
+		t.SelectAllColumns(false)
+		for _, columnName := range names {
+			err := t.SelectColumnName(columnName, true)
+			if err != nil {
+				return err
+			}
+		}
+	}
 	// Print the table in the user-requested format.
 	return t.Print(profile.Get("output-format"))
 
