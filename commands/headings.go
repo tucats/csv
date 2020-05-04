@@ -55,8 +55,6 @@ func HeadingsAction(c *cli.Context) error {
 		textLines = append(textLines, scanner.Text())
 	}
 
-	defer file.Close()
-
 	// Use first row as headers. IF the no-headings flag is
 	// set, we just generate headings which are the column
 	// numbers.

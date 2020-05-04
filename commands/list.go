@@ -75,15 +75,15 @@ func ListAction(c *cli.Context) error {
 		textLines = append(textLines, scanner.Text())
 	}
 
-	defer file.Close()
-
-	// Use first row as headers. IF the no-headings flag is
+	// Use first row as headers. If the no-headings flag is
 	// set, we just generate headings which are the column
 	// numbers.
 	var headingString string
 	startingLine := 0
 
 	if c.GetBool("no-headings") {
+		// Get the number of columns in the first row to define our column count.
+		// Create a string wiht the ordinal positions ("1", "2", ...)
 		count := tables.CsvSplit(textLines[0])
 		var h strings.Builder
 		for i := range count {
@@ -94,9 +94,12 @@ func ListAction(c *cli.Context) error {
 		}
 		headingString = h.String()
 	} else {
+		// There are headings, so just use the first line as the heading string.
 		headingString = textLines[0]
 		startingLine = 1
 	}
+
+	// Create an instance of a table we can populate.
 	t, _ := tables.NewCSV(headingString)
 
 	// Add the rows to the table representing the information to be printed out
