@@ -1,4 +1,6 @@
-Name,Age
-Tom,60
-Mary,59
-Chelsea,27
+Name,Age,Role
+Tom,60,Dad
+Mary,59,Mom
+Chelsea,27,Daughter
+Sarah, 25, Daughter
+Claire, 17, Cat

@@ -20,11 +20,6 @@ import (
 // subcommand itself in the parent grammar.
 var ListGrammar = []cli.Option{
 	cli.Option{
-		LongName:    "filename",
-		Description: "File name of CSV data",
-		OptionType:  cli.ParameterType,
-	},
-	cli.Option{
 		LongName:    "no-headings",
 		Description: "If specified, CSV file does not contain a heading row",
 		OptionType:  cli.BooleanType,
