@@ -1,6 +1,5 @@
-// Package main contains the main program, which is used as a test driver to validate features
-// as they are added to the app-cli package. This is not intended to be run as a useful CLI
-// program, as it has uninteresting and limited features.
+// Package main contains the main program for the cvs command line tool. This command
+// line tool is used to view the contents and attributes of a CSV file.
 package main
 
 import (
@@ -15,7 +14,7 @@ import (
 func main() {
 
 	app := app.New("csv: view CSV file attributes and contents")
-	app.SetVersion(1, 1, 1)
+	app.SetVersion(1, 0, 3)
 	app.SetCopyright("(C) Copyright Tom Cole 2020")
 
 	err := app.Run(commands.Grammar, os.Args)

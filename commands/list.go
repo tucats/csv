@@ -78,9 +78,9 @@ func ListAction(c *cli.Context) error {
 
 	defer file.Close()
 
-	// Use first row as headers. @TODO make this controlled by
-	// an option later
-
+	// Use first row as headers. IF the no-headings flag is
+	// set, we just generate headings which are the column
+	// numbers.
 	var headingString string
 	startingLine := 0
 
