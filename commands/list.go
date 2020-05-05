@@ -140,11 +140,9 @@ func ListAction(c *cli.Context) error {
 
 	if names, present := c.GetStringList("columns"); present {
 		t.SelectAllColumns(false)
-		for _, columnName := range names {
-			err := t.SelectColumnName(columnName, true)
-			if err != nil {
-				return err
-			}
+		err := t.SetColumnOrderByName(names)
+		if err != nil {
+			return err
 		}
 	}
 	// Print the table in the user-requested format.
