@@ -26,6 +26,7 @@ var ListGrammar = []cli.Option{
 	},
 	cli.Option{
 		LongName:    "headings",
+		Aliases:     []string{"heading"},
 		Description: "Specify the headings for the CSV file if no header row",
 		OptionType:  cli.StringListType,
 	},
@@ -46,6 +47,7 @@ var ListGrammar = []cli.Option{
 	},
 	cli.Option{
 		LongName:    "columns",
+		Aliases:     []string{"column"},
 		ShortName:   "c",
 		OptionType:  cli.StringListType,
 		Description: "Specify the columns to print using a comma-separated list of names",
