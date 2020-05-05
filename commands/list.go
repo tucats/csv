@@ -139,7 +139,6 @@ func ListAction(c *cli.Context) error {
 	// If the user asked for specific columns, filter that now.
 
 	if names, present := c.GetStringList("columns"); present {
-		t.SelectAllColumns(false)
 		err := t.SetColumnOrderByName(names)
 		if err != nil {
 			return err
