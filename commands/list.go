@@ -57,6 +57,11 @@ var ListGrammar = []cli.Option{
 		OptionType:  cli.StringType,
 		Description: "Specify the column to use to sort the output",
 	},
+	cli.Option{
+		LongName:    "where",
+		OptionType:  cli.StringType,
+		Description: "Specify a filter clause",
+	},
 }
 
 // ListAction is the command handler to list objects.
@@ -145,6 +150,10 @@ func ListAction(c *cli.Context) error {
 		if err != nil {
 			return err
 		}
+	}
+
+	if clause, present := c.GetString("where"); present {
+		t.SetWhere(clause)
 	}
 	// Print the table in the user-requested format.
 	return t.Print(profile.Get("output-format"))
