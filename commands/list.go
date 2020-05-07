@@ -46,9 +46,8 @@ var ListGrammar = []cli.Option{
 		OptionType:  cli.IntType,
 	},
 	cli.Option{
-		LongName:    "columns",
-		Aliases:     []string{"column"},
-		ShortName:   "c",
+		LongName:    "select",
+		ShortName:   "s",
 		OptionType:  cli.StringListType,
 		Description: "Specify the columns to print using a comma-separated list of names",
 	},
@@ -145,7 +144,7 @@ func ListAction(c *cli.Context) error {
 
 	// If the user asked for specific columns, filter that now.
 
-	if names, present := c.GetStringList("columns"); present {
+	if names, present := c.GetStringList("select"); present {
 		err := t.SetColumnOrderByName(names)
 		if err != nil {
 			return err
