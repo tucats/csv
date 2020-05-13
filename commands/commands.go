@@ -19,6 +19,7 @@ var Grammar = []cli.Option{
 	},
 	cli.Option{
 		LongName:             "headings",
+		Aliases:              []string{"columns"},
 		Description:          "Show column headings of CSV file",
 		OptionType:           cli.Subcommand,
 		Value:                HeadingsGrammar,

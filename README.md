@@ -83,3 +83,10 @@ Use the `--start` option to specify the first row number to display. All rows wi
 row number less than this value will not be printed. You must specify a value that is
 greater than zero. If you specify a starting row number greater than the number of
 rows in the table, then no rows are printed.
+
+## --where
+Use the `--where` option to specify a filter expression that will select the rows
+to print. The expression can reference any column in the row by name, perform
+comparisons and basic math, and must result in a value that is a boolean value.
+The automatic variable name "_row_" is also created that contains the row
+number if needed in a filter calculation
