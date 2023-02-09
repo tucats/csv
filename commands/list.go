@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/tucats/gopackages/app-cli/cli"
-	"github.com/tucats/gopackages/app-cli/profile"
+	"github.com/tucats/gopackages/app-cli/settings"
 	"github.com/tucats/gopackages/app-cli/tables"
 	"github.com/tucats/gopackages/app-cli/ui"
 )
@@ -19,44 +19,44 @@ import (
 // grammar, as the action was defined in the parent grammer for the
 // subcommand itself in the parent grammar.
 var ListGrammar = []cli.Option{
-	cli.Option{
+	{
 		LongName:    "no-headings",
 		Description: "If specified, CSV file does not contain a heading row",
 		OptionType:  cli.BooleanType,
 	},
-	cli.Option{
+	{
 		LongName:    "headings",
 		Aliases:     []string{"heading"},
 		Description: "Specify the headings for the CSV file if no header row",
 		OptionType:  cli.StringListType,
 	},
-	cli.Option{
+	{
 		LongName:    "row-numbers",
 		Description: "If specified, print a column with the row number",
 		OptionType:  cli.BooleanType,
 	},
-	cli.Option{
+	{
 		LongName:    "start",
 		Description: "Specify the row number to start the list",
 		OptionType:  cli.IntType,
 	},
-	cli.Option{
+	{
 		LongName:    "limit",
 		Description: "Specify the number of items to list",
 		OptionType:  cli.IntType,
 	},
-	cli.Option{
+	{
 		LongName:    "select",
 		ShortName:   "s",
 		OptionType:  cli.StringListType,
 		Description: "Specify the columns to print using a comma-separated list of names",
 	},
-	cli.Option{
+	{
 		LongName:    "order-by",
 		OptionType:  cli.StringType,
 		Description: "Specify the column to use to sort the output",
 	},
-	cli.Option{
+	{
 		LongName:    "where",
 		OptionType:  cli.StringType,
 		Description: "Specify a filter clause",
@@ -66,10 +66,10 @@ var ListGrammar = []cli.Option{
 // ListAction is the command handler to list objects.
 func ListAction(c *cli.Context) error {
 
-	ui.Debug("In the LIST action")
+	ui.Log(ui.DebugLogger, "In the LIST action")
 
 	// There must be a paramter which is the file name
-	fileName := c.GetParameter(0)
+	fileName := c.Parameter(0)
 	file, err := os.Open(fileName)
 
 	if err != nil {
@@ -92,7 +92,7 @@ func ListAction(c *cli.Context) error {
 	var headingString string
 	startingLine := 0
 
-	if c.GetBool("no-headings") {
+	if c.Boolean("no-headings") {
 		// Get the number of columns in the first row to define our column count.
 		// Create a string wiht the ordinal positions ("1", "2", ...)
 		count := tables.CsvSplit(textLines[0])
@@ -105,7 +105,7 @@ func ListAction(c *cli.Context) error {
 		}
 		headingString = h.String()
 	} else if c.WasFound("headings") {
-		headingString, _ = c.GetString("headings")
+		headingString, _ = c.String("headings")
 	} else {
 		// There are headings, so just use the first line as the heading string.
 		headingString = textLines[0]
@@ -123,38 +123,41 @@ func ListAction(c *cli.Context) error {
 		t.AddCSVRow(line)
 	}
 
-	t.ShowHeadings(!c.GetBool("no-headings"))
-	t.ShowRowNumbers(c.GetBool("row-numbers"))
+	t.ShowHeadings(!c.Boolean("no-headings"))
+	t.ShowRowNumbers(c.Boolean("row-numbers"))
 
-	if name, present := c.GetString("order-by"); present {
+	if name, present := c.String("order-by"); present {
 		if err := t.SetOrderBy(name); err != nil {
 			return err
 		}
 	}
 
-	if startingRow, present := c.GetInteger("start"); present {
+	if startingRow, present := c.Integer("start"); present {
 		if err := t.SetStartingRow(startingRow); err != nil {
 			return err
 		}
 	}
 
-	if limit, present := c.GetInteger("limit"); present {
+	if limit, present := c.Integer("limit"); present {
 		t.RowLimit(limit)
 	}
 
 	// If the user asked for specific columns, filter that now.
 
-	if names, present := c.GetStringList("select"); present {
+	if names, present := c.StringList("select"); present {
 		err := t.SetColumnOrderByName(names)
 		if err != nil {
 			return err
 		}
 	}
 
-	if clause, present := c.GetString("where"); present {
+	if clause, present := c.String("where"); present {
 		t.SetWhere(clause)
 	}
+
+	t.SetPagination(0, 0)
+
 	// Print the table in the user-requested format.
-	return t.Print(profile.Get("output-format"))
+	return t.Print(settings.Get("output-format"))
 
 }

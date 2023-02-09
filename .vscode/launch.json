@@ -9,9 +9,9 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "${fileDirname}",
+            "program": "${workspaceFolder}",
             "env": {},
-            "args": [ "list", "test.txt", "--where", "(Role=\"Daughter\") & (age=25)"]
+            "args": [ "list", "test.txt", "--where", "(role==\"Daughter\") & (age==25)"]
         }
     ]
 }

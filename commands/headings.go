@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/tucats/gopackages/app-cli/cli"
-	"github.com/tucats/gopackages/app-cli/profile"
+	"github.com/tucats/gopackages/app-cli/settings"
 	"github.com/tucats/gopackages/app-cli/tables"
 	"github.com/tucats/gopackages/app-cli/ui"
 )
@@ -20,12 +20,12 @@ import (
 // grammar, as the action was defined in the parent grammer for the
 // subcommand itself in the parent grammar.
 var HeadingsGrammar = []cli.Option{
-	cli.Option{
+	{
 		LongName:    "row-numbers",
 		Description: "If specified, print a column with the row number",
 		OptionType:  cli.BooleanType,
 	},
-	cli.Option{
+	{
 		LongName:    "order-by",
 		OptionType:  cli.StringType,
 		Description: "Specify the column to use to sort the output",
@@ -35,10 +35,10 @@ var HeadingsGrammar = []cli.Option{
 // HeadingsAction is the command handler to list CSV file headings.
 func HeadingsAction(c *cli.Context) error {
 
-	ui.Debug("In the HEADINGS action")
+	ui.Log(ui.DebugLogger, "In the HEADINGS action")
 
 	// There must be a paramter which is the file name
-	fileName := c.GetParameter(0)
+	fileName := c.Parameter(0)
 	file, err := os.Open(fileName)
 
 	if err != nil {
@@ -60,7 +60,7 @@ func HeadingsAction(c *cli.Context) error {
 	// numbers.
 	var headingString string
 
-	if c.GetBool("no-headings") {
+	if c.Boolean("no-headings") {
 		count := tables.CsvSplit(textLines[0])
 		var h strings.Builder
 		for i := range count {
@@ -84,27 +84,27 @@ func HeadingsAction(c *cli.Context) error {
 		t.AddRowItems(strconv.Itoa(n+1), line)
 	}
 
-	t.ShowRowNumbers(c.GetBool("row-numbers"))
+	t.ShowRowNumbers(c.Boolean("row-numbers"))
 
-	if startingRow, present := c.GetInteger("start"); present {
+	if startingRow, present := c.Integer("start"); present {
 		if err := t.SetStartingRow(startingRow); err != nil {
 			return err
 		}
 	}
 
-	if limit, present := c.GetInteger("limit"); present {
+	if limit, present := c.Integer("limit"); present {
 		t.RowLimit(limit)
 	}
 
-	if name, present := c.GetString("order-by"); present {
+	if name, present := c.String("order-by"); present {
 		if err := t.SetOrderBy(name); err != nil {
 			return err
 		}
 	}
 
 	// Print the table in the user-requested format.
-	format := profile.Get("output-format")
-	ui.Debug("Format encoding is " + format)
+	format := settings.Get("output-format")
+	ui.Log(ui.DebugLogger, "Format encoding is "+format)
 	if format == "json" {
 		var j strings.Builder
 		j.WriteRune('[')
@@ -121,6 +121,6 @@ func HeadingsAction(c *cli.Context) error {
 		return nil
 	}
 
-	return t.Print(profile.Get("output-format"))
+	return t.Print(settings.Get("output-format"))
 
 }

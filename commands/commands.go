@@ -8,7 +8,7 @@ import "github.com/tucats/gopackages/app-cli/cli"
 // Grammar is the primary grammar of the command line, which defines all global options
 // and any subcommands.
 var Grammar = []cli.Option{
-	cli.Option{
+	{
 		LongName:             "list",
 		Description:          "List contents of a CSV file",
 		OptionType:           cli.Subcommand,
@@ -17,7 +17,7 @@ var Grammar = []cli.Option{
 		ParametersExpected:   1,
 		ParameterDescription: "filename",
 	},
-	cli.Option{
+	{
 		LongName:             "headings",
 		Aliases:              []string{"columns"},
 		Description:          "Show column headings of CSV file",
