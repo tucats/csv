@@ -21,45 +21,45 @@ import (
 var ListGrammar = []cli.Option{
 	{
 		LongName:    "no-headings",
-		Description: "If specified, CSV file does not contain a heading row",
+		Description: "opt.no.headings",
 		OptionType:  cli.BooleanType,
 	},
 	{
 		LongName:    "headings",
 		Aliases:     []string{"heading"},
-		Description: "Specify the headings for the CSV file if no header row",
+		Description: "opt.headings",
 		OptionType:  cli.StringListType,
 	},
 	{
 		LongName:    "row-numbers",
-		Description: "If specified, print a column with the row number",
+		Description: "opt.row.numbers",
 		OptionType:  cli.BooleanType,
 	},
 	{
 		LongName:    "start",
-		Description: "Specify the row number to start the list",
+		Description: "opt.start",
 		OptionType:  cli.IntType,
 	},
 	{
 		LongName:    "limit",
-		Description: "Specify the number of items to list",
+		Description: "opt.limit",
 		OptionType:  cli.IntType,
 	},
 	{
 		LongName:    "select",
 		ShortName:   "s",
 		OptionType:  cli.StringListType,
-		Description: "Specify the columns to print using a comma-separated list of names",
+		Description: "opt.select",
 	},
 	{
 		LongName:    "order-by",
 		OptionType:  cli.StringType,
-		Description: "Specify the column to use to sort the output",
+		Description: "opt.order",
 	},
 	{
 		LongName:    "where",
 		OptionType:  cli.StringType,
-		Description: "Specify a filter clause",
+		Description: "opt.where",
 	},
 }
 

@@ -22,13 +22,13 @@ import (
 var HeadingsGrammar = []cli.Option{
 	{
 		LongName:    "row-numbers",
-		Description: "If specified, print a column with the row number",
+		Description: "opt.row.numbers",
 		OptionType:  cli.BooleanType,
 	},
 	{
 		LongName:    "order-by",
 		OptionType:  cli.StringType,
-		Description: "Specify the column to use to sort the output",
+		Description: "opt.order",
 	},
 }
 

@@ -9,13 +9,27 @@ import (
 	"github.com/tucats/csv/commands"
 	"github.com/tucats/gopackages/app-cli/app"
 	"github.com/tucats/gopackages/app-cli/cli"
+	"github.com/tucats/gopackages/i18n"
 )
 
 func main() {
 
+	// Register the application specific localizations.
+	i18n.Register(localizations)
+
+	// Disable subcommands and options we don't use.
+	app.MakePrivate("logon")
+	app.MakePrivate("format")
+	app.MakePrivate("config")
+	app.MakePrivate("log")
+	app.MakePrivate("log-file")
+	app.MakePrivate("profile")
+	app.MakePrivate("insecure")
+	app.MakePrivate("quiet")
+
 	app := app.New("csv: view CSV file attributes and contents")
-	app.SetVersion(1, 0, 3)
-	app.SetCopyright("(C) Copyright Tom Cole 2020")
+	app.SetVersion(1, 0, 4)
+	app.SetCopyright("(C) Copyright Tom Cole 2020-2023")
 
 	err := app.Run(commands.Grammar, os.Args)
 

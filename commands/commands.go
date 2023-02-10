@@ -10,7 +10,7 @@ import "github.com/tucats/gopackages/app-cli/cli"
 var Grammar = []cli.Option{
 	{
 		LongName:             "list",
-		Description:          "List contents of a CSV file",
+		Description:          "csv.list",
 		OptionType:           cli.Subcommand,
 		Value:                ListGrammar,
 		Action:               ListAction,
@@ -20,7 +20,7 @@ var Grammar = []cli.Option{
 	{
 		LongName:             "headings",
 		Aliases:              []string{"columns"},
-		Description:          "Show column headings of CSV file",
+		Description:          "csv.show",
 		OptionType:           cli.Subcommand,
 		Value:                HeadingsGrammar,
 		Action:               HeadingsAction,
