@@ -28,7 +28,7 @@ func main() {
 	app.MakePrivate("quiet")
 
 	app := app.New("csv: view CSV file attributes and contents")
-	app.SetVersion(1, 0, 4)
+	app.SetVersion(1, 0, 5)
 	app.SetCopyright("(C) Copyright Tom Cole 2020-2023")
 
 	err := app.Run(commands.Grammar, os.Args)
